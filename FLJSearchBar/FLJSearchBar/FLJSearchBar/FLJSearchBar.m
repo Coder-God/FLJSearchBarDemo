@@ -36,8 +36,8 @@
         //光标颜色tintColor
 //        self.tintColor = [UIColor clearColor];
         self.backgroundImage = [UIImage imageWithColor:[UIColor whiteColor] size:CGSizeMake(100, self.bounds.size.height)];
-        [self setImage:[UIImage imageNamed:@"icon_search"] forSearchBarIcon:UISearchBarIconSearch state:UIControlStateNormal];
-        [self setImage:[UIImage imageNamed:@"icon_search_clear"] forSearchBarIcon:UISearchBarIconClear state:UIControlStateNormal];
+//        [self setImage:[UIImage imageNamed:@"icon_search"] forSearchBarIcon:UISearchBarIconSearch state:UIControlStateNormal];
+//        [self setImage:[UIImage imageNamed:@"icon_search_clear"] forSearchBarIcon:UISearchBarIconClear state:UIControlStateNormal];
         //ios11 之前这个高度决定textfield高度 默认28
         [self setSearchFieldBackgroundImage:[UIImage imageWithColor:[UIColor clearColor] size:CGSizeMake(100, self.bounds.size.height)] forState:UIControlStateNormal];
         

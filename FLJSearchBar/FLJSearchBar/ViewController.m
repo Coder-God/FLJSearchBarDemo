@@ -23,7 +23,7 @@
     FLJSearchBar* searchBar = [[FLJSearchBar alloc] initWithFrame:CGRectMake(0, 50, [UIScreen mainScreen].bounds.size.width, 60)];
     searchBar.delegate = self;
     searchBar.borderColor = [UIColor blackColor];
-    searchBar.cornerRadius = 5.f;
+    searchBar.cornerRadius = 30.f;
     searchBar.placeHolderString = @"请输入搜索关键词";
     searchBar.placeHolderStringFont = [UIFont systemFontOfSize:20];
     searchBar.placeHolderStringColor = [UIColor redColor];
@@ -31,6 +31,9 @@
     searchBar.placeHolderCenter = NO;
     searchBar.showsCancelButton = YES;
     searchBar.cancelInputDisabled = YES;
+    [searchBar setImage:[UIImage imageNamed:@"icon_search"] forSearchBarIcon:UISearchBarIconSearch state:UIControlStateNormal];
+    [searchBar setImage:[UIImage imageNamed:@"icon_search_clear"] forSearchBarIcon:UISearchBarIconClear state:UIControlStateNormal];
+
     [self.view addSubview:searchBar];
 }
 
