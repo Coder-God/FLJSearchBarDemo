@@ -24,12 +24,12 @@
     searchBar.delegate = self;
     searchBar.borderColor = [UIColor blackColor];
     searchBar.cornerRadius = 5.f;
-    searchBar.placeHolderString = @"hahshdhhasd";
+    searchBar.placeHolderString = @"请输入搜索关键词";
     searchBar.placeHolderStringFont = [UIFont systemFontOfSize:20];
     searchBar.placeHolderStringColor = [UIColor redColor];
-    searchBar.clearBtnHidden = YES;
-    searchBar.placeHolderCenter = YES;
-    searchBar.showsCancelButton = NO;
+    searchBar.clearBtnHidden = NO;
+    searchBar.placeHolderCenter = NO;
+    searchBar.showsCancelButton = YES;
     searchBar.cancelInputDisabled = YES;
     [self.view addSubview:searchBar];
 }
@@ -63,6 +63,7 @@
 -(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
     NSLog(@"%s",__func__);
+    [self.view endEditing:YES];
 }
 
 

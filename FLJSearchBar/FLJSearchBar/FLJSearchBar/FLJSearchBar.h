@@ -10,7 +10,11 @@
 
 @interface FLJSearchBar : UISearchBar
 
-//默认输入时显示即UITextFieldViewModeWhileEditing
+/**
+ 这里根据实际应用来做的封装，一般情况都是 UITextFieldViewModeWhileEditing和UITextFieldViewModeNever
+ yes-UITextFieldViewModeNever    no-UITextFieldViewModeWhileEditing
+ 默认 no
+ */
 @property(nonatomic,assign)BOOL clearBtnHidden;
 
 //placeHolder 是否居中 iOS11之前默认是居中的 iOS11之后居左

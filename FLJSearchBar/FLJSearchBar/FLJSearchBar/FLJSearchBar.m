@@ -21,6 +21,7 @@
 
 @interface FLJSearchBar ()<UITextFieldDelegate>
 
+@property(nonatomic,assign)BOOL hideClearBtn;
 
 @end
 
@@ -54,14 +55,13 @@
         self.cornerRadius = self.bounds.size.height/2.f;
         self.borderWidth = 1.f;
         self.borderColor = kDefaultBorderColor;
-        self.placeHolderCenter = YES;
+        self.placeHolderCenter = NO;
         [self setCancelBtnTitle:@"取消"];
     }
     return self;
 }
 
 #pragma mark  setter & getter
-
 
 /**
  设置placeHolder
@@ -144,9 +144,15 @@
 -(void)setClearBtnHidden:(BOOL)clearBtnHidden
 {
     _clearBtnHidden = clearBtnHidden;
+    self.hideClearBtn = _clearBtnHidden;
+}
+
+-(void)setHideClearBtn:(BOOL)hideClearBtn
+{
+    _hideClearBtn = hideClearBtn;
     UITextField *textField = [self textField];
     if (textField) {
-        if (clearBtnHidden) {
+        if (_hideClearBtn) {
             textField.clearButtonMode = UITextFieldViewModeNever;
         }else
             textField.clearButtonMode = UITextFieldViewModeWhileEditing;
@@ -179,7 +185,6 @@
     }
 }
 
-
 /**
  设置搜索框边框 宽度
  */
@@ -193,7 +198,6 @@
     }
 }
 
-
 /**
  设置placeholder是否居中显示
  */
@@ -204,7 +208,11 @@
     if (@available(iOS 11.0, *)) {
         UITextField* textField = [self textField];
         textField.delegate = self;
-        [self setPositionAdjustment:UIOffsetMake((textField.frame.size.width-[self placeHolderTextWidth])/2, 0) forSearchBarIcon:UISearchBarIconSearch];
+        if (_placeHolderCenter) {
+            [self setPositionAdjustment:UIOffsetMake((textField.frame.size.width-[self placeHolderTextWidth])/2, 0) forSearchBarIcon:UISearchBarIconSearch];
+        }else
+            [self setPositionAdjustment:self.originPositionSearchOffSet forSearchBarIcon:UISearchBarIconSearch];
+
     }else
     {
         SEL centerSelector = NSSelectorFromString([NSString stringWithFormat:@"%@%@", @"setCenter", @"Placeholder:"]);
@@ -219,7 +227,6 @@
         }
     }
 }
-
 
 /**
  设置当输入框没有获得焦点时，点击取消按钮是否直接响应取消事件，而不是响应输入事件
@@ -239,18 +246,22 @@
     if ([self.delegate respondsToSelector:@selector(searchBarShouldBeginEditing:)]) {
        BOOL begin = [self.delegate searchBarShouldBeginEditing:self];
         if (begin) {
-            if (@available(iOS 11.0, *)) {
+            if (@available(iOS 11.0, *) && self.placeHolderCenter) {
                 [self setPositionAdjustment:self.originPositionSearchOffSet forSearchBarIcon:UISearchBarIconSearch];
             }
-            self.clearBtnHidden = NO;
+            if (!self.clearBtnHidden) {
+                self.hideClearBtn = NO;
+            }
         }
         return begin;
     }
     
-    if (@available(iOS 11.0, *)) {
+    if (@available(iOS 11.0, *) && self.placeHolderCenter) {
         [self setPositionAdjustment:self.originPositionSearchOffSet forSearchBarIcon:UISearchBarIconSearch];
     }
-    self.clearBtnHidden = NO;
+    if (!self.clearBtnHidden) {
+        self.hideClearBtn = NO;
+    }
 
     return YES;
 }
@@ -261,22 +272,26 @@
         BOOL end = [self.delegate searchBarShouldEndEditing:self];
         
         if (end) {
-            if (@available(iOS 11.0, *)) {
+            if (@available(iOS 11.0, *) && self.placeHolderCenter) {
                 if (textField.text.length==0) {
                     [self setPositionAdjustment:UIOffsetMake((textField.frame.size.width-[self placeHolderTextWidth])/2, 0) forSearchBarIcon:UISearchBarIconSearch];
                 }
             }
-            self.clearBtnHidden = YES;
+            if (self.clearBtnHidden) {
+                self.hideClearBtn = YES;
+            }
         }
         return end;
     }
     
-    if (@available(iOS 11.0, *)) {
+    if (@available(iOS 11.0, *) && self.placeHolderCenter) {
         if (textField.text.length==0) {
             [self setPositionAdjustment:UIOffsetMake((textField.frame.size.width-[self placeHolderTextWidth])/2, 0) forSearchBarIcon:UISearchBarIconSearch];
         }
     }
-    self.clearBtnHidden = YES;
+    if (self.clearBtnHidden) {
+        self.hideClearBtn = YES;
+    }
 
     return YES;
 }
@@ -328,7 +343,7 @@
 -(void)layoutSubviews
 {
     [super layoutSubviews];
-    if (@available(iOS 11.0, *)) {
+    if (@available(iOS 11.0, *) && self.placeHolderCenter) {
         UITextField* textField = [self textField];
         [self setPositionAdjustment:UIOffsetMake((textField.frame.size.width-[self placeHolderTextWidth])/2, 0) forSearchBarIcon:UISearchBarIconSearch];
     }
