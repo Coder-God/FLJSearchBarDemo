@@ -28,7 +28,7 @@
     searchBar.placeHolderStringFont = [UIFont systemFontOfSize:20];
     searchBar.placeHolderStringColor = [UIColor redColor];
     searchBar.clearBtnHidden = NO;
-    searchBar.placeHolderCenter = NO;
+    searchBar.placeHolderCenter = YES;
     searchBar.showsCancelButton = YES;
     searchBar.cancelInputDisabled = YES;
     [searchBar setImage:[UIImage imageNamed:@"icon_search"] forSearchBarIcon:UISearchBarIconSearch state:UIControlStateNormal];

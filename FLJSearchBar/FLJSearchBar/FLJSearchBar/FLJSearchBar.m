@@ -212,19 +212,21 @@
             [self setPositionAdjustment:UIOffsetMake((textField.frame.size.width-[self placeHolderTextWidth])/2, 0) forSearchBarIcon:UISearchBarIconSearch];
         }else
             [self setPositionAdjustment:self.originPositionSearchOffSet forSearchBarIcon:UISearchBarIconSearch];
-
     }else
     {
-        SEL centerSelector = NSSelectorFromString([NSString stringWithFormat:@"%@%@", @"setCenter", @"Placeholder:"]);
-        if ([self respondsToSelector:centerSelector])
-        {
-            NSMethodSignature *signature = [[UISearchBar class] instanceMethodSignatureForSelector:centerSelector];
-            NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
-            [invocation setTarget:self];
-            [invocation setSelector:centerSelector];
-            [invocation setArgument:&_placeHolderCenter atIndex:2];
-            [invocation invoke];
-        }
+        //方法一
+        [self setValue:@(_placeHolderCenter) forKeyPath:@"centerPlaceholder"];
+        //方法二
+//        SEL centerSelector = NSSelectorFromString([NSString stringWithFormat:@"%@%@", @"setCenter", @"Placeholder:"]);
+//        if ([self respondsToSelector:centerSelector])
+//        {
+//            NSMethodSignature *signature = [[UISearchBar class] instanceMethodSignatureForSelector:centerSelector];
+//            NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
+//            [invocation setTarget:self];
+//            [invocation setSelector:centerSelector];
+//            [invocation setArgument:&_placeHolderCenter atIndex:2];
+//            [invocation invoke];
+//        }
     }
 }
 
